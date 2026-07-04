@@ -31,12 +31,12 @@ Mục tiêu:
 
 Checklist:
 
-- [x] Tạo `AGENT.md`
-- [x] Tạo `CODEX.md`
-- [x] Tạo `ARCHITECTURE.md`
-- [x] Tạo `PROCESS_PROJECT.md`
-- [x] Review lại docs
-- [ ] Commit docs
+- [X] Tạo `AGENT.md`
+- [X] Tạo `CODEX.md`
+- [X] Tạo `ARCHITECTURE.md`
+- [X] Tạo `PROCESS_PROJECT.md`
+- [X] Review lại docs
+- [X] Commit docs
 
 Done khi:
 
@@ -81,14 +81,14 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Chuẩn hóa cấu trúc thư mục `lib/`
-- [ ] Tạo `app/app.dart`
-- [ ] Tạo theme cơ bản
-- [ ] Tạo router cơ bản
-- [ ] Tạo config môi trường dev
-- [ ] Tạo màn hình splash hoặc placeholder
-- [ ] Chạy được app không lỗi
-- [ ] Chạy `flutter analyze`
+- [X] Chuẩn hóa cấu trúc thư mục `lib/`
+- [X] Tạo `app/app.dart`
+- [X] Tạo theme cơ bản
+- [X] Tạo router cơ bản
+- [X] Tạo config môi trường dev
+- [X] Tạo màn hình splash hoặc placeholder
+- [X] Chạy được app không lỗi
+- [X] Chạy `flutter analyze`
 
 Done khi:
 
