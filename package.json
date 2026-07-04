@@ -1,0 +1,14 @@
+{
+  "name": "splitmate-fe",
+  "private": true,
+  "scripts": {
+    "dev": "flutter run --dart-define-from-file=.env.development.local",
+    "dev:chrome": "flutter run -d chrome --dart-define-from-file=.env.development.local",
+    "analyze": "flutter analyze",
+    "test": "flutter test",
+    "fix": "dart fix --apply",
+    "clean": "flutter clean",
+    "pub:get": "flutter pub get",
+    "build:apk": "flutter build apk --release --dart-define-from-file=.env.production"
+  }
+}
