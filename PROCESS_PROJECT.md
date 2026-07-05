@@ -132,13 +132,13 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Thêm navigation package
-- [ ] Thêm state management package
-- [ ] Thêm HTTP client package
-- [ ] Thêm secure storage package
-- [ ] Thêm env/config package nếu cần
-- [ ] Kiểm tra app vẫn chạy
-- [ ] Cập nhật docs nếu dependency thay đổi kiến trúc
+- [X] Thêm navigation package
+- [X] Thêm state management package
+- [X] Thêm HTTP client package
+- [X] Thêm secure storage package
+- [X] Thêm env/config package nếu cần
+- [X] Kiểm tra app vẫn chạy
+- [X] Cập nhật docs nếu dependency thay đổi kiến trúc
 
 Done khi:
 
