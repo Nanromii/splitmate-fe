@@ -16,11 +16,9 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [
-        appConfigProvider.overrideWithValue(config)
+        appConfigProvider.overrideWithValue(config),
       ],
-      child: SplitMateApp(
-        config: config
-      ),
+      child: SplitMateApp(config: config),
     ),
   );
 }
