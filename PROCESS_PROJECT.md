@@ -3,10 +3,14 @@
 ## A. Trạng thái hiện tại
 
 - Backend: Auth đã xong, Group Management đã xong.
-- Frontend Flutter: mới khởi tạo project.
-- Trạng thái hiện tại của Flutter: `Phase 0 - Documentation & Direction`.
-- Bước đang làm: tạo tài liệu nền tảng cho AI/dev.
-- Bước tiếp theo sau khi xong docs: setup foundation Flutter project.
+- Frontend Flutter đã xong:
+  - `Phase 0 - Documentation & Direction`
+  - `Phase 1 - Flutter Foundation Setup`
+  - `Phase 2 - Dependencies Setup`
+  - `Phase 3 - Auth UI & Session Flow`
+- Trạng thái hiện tại của Flutter: cuối `Phase 3`, chuẩn bị sang `Phase 4 - Main Layout & Navigation`.
+- Bước đang làm: đồng bộ lại tài liệu theo trạng thái source hiện tại.
+- Bước tiếp theo: làm main shell/navigation sau khi đăng nhập.
 
 ## B. Nguyên tắc làm dự án
 
@@ -153,13 +157,14 @@ Commit gợi ý:
 
 Mục tiêu:
 
-- Làm luồng đăng nhập Google và quản lý session phía mobile.
+- Làm luồng đăng ký, đăng nhập và quản lý session phía mobile.
 
 Việc cần làm:
 
 - Đọc API contract Auth từ Swagger hoặc BE docs.
 - Tạo model, API layer, state cho auth.
-- Tạo login screen.
+- Tạo auth screen cho local login/register và Google login.
+- Tích hợp local account theo đúng contract backend.
 - Tích hợp Google sign-in theo đúng contract backend.
 - Lưu token an toàn.
 - Xử lý login, logout, token expired.
@@ -183,26 +188,31 @@ Cách kiểm tra:
 Checklist:
 
 - [X] Đọc API contract Auth từ Swagger/BE docs
-- [ ] Tạo auth models
-- [ ] Tạo auth API client/repository
-- [ ] Tạo auth provider/state
-- [ ] Tạo login screen
-- [ ] Tích hợp Google sign-in theo contract backend
-- [ ] Lưu access token/refresh token an toàn
-- [ ] Tự điều hướng sau login
-- [ ] Xử lý logout
-- [ ] Xử lý token expired nếu backend đã có refresh token
-- [ ] Test login/logout thủ công
+- [X] Tạo auth models
+- [X] Tạo auth API client/repository
+- [X] Tạo auth provider/state
+- [X] Tạo auth screen
+- [X] Tích hợp local register theo contract backend
+- [X] Tích hợp local login theo contract backend
+- [X] Tích hợp Google sign-in theo contract backend
+- [X] Lưu access token/refresh token an toàn
+- [X] Tự điều hướng sau login
+- [X] Xử lý logout
+- [X] Xử lý token expired nếu backend đã có refresh token
+- [X] Chạy `flutter analyze` cho auth slice
+- [ ] Test local register/local login/google login/logout thủ công trên device/emulator
 
 Done khi:
 
+- User đăng ký được bằng tài khoản nội bộ.
+- User login được bằng tài khoản nội bộ.
 - User login được bằng Google.
 - Token được lưu.
 - App nhớ session sau khi mở lại.
 - Logout xóa session.
 
 Commit gợi ý:
-`feat(auth): implement google login flow`
+`feat(auth): support local and google sign-in flow`
 
 ### Phase 4 - Main Layout & Navigation
 
@@ -533,9 +543,9 @@ Commit gợi ý:
 ## D. Bước hiện tại và bước tiếp theo
 
 ```txt
-Current phase: Phase 0 - Documentation & Direction
-Current task: Create foundational project documentation
-Next task: Setup Flutter foundation structure
+Current phase: Phase 3 - Auth UI & Session Flow
+Current task: Finalize docs after auth implementation
+Next task: Phase 4 - Main Layout & Navigation
 ```
 
 ## E. Template cập nhật tiến độ
@@ -549,3 +559,22 @@ Next task: Setup Flutter foundation structure
 - Notes:
 - Next:
 ```
+
+## F. Progress Log
+
+### 2026-07-07
+- Done:
+  - Hoàn thành auth flow với local register, local login và Google sign-in
+  - Thêm secure session bootstrap từ storage và refresh fallback
+  - Đồng bộ router để điều hướng giữa `splash`, `login`, `home`
+- Changed files:
+  - `lib/features/auth/`
+  - `lib/app/app.dart`
+  - `lib/app/router/`
+  - `lib/core/config/app_config.dart`
+  - `pubspec.yaml`
+- Notes:
+  - Auth UI hiện ưu tiên flow đúng và code sạch, chưa tập trung polish giao diện
+  - Cần test thủ công đủ 4 case: local register, local login, Google login, logout
+- Next:
+  - Làm `Phase 4 - Main Layout & Navigation`
