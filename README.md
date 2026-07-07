@@ -18,6 +18,8 @@ SplitMate là ứng dụng mobile hỗ trợ chia tiền trong nhóm một cách
 
 ## Tính năng dự kiến
 
+- Đăng ký tài khoản nội bộ bằng `email + password`.
+- Đăng nhập bằng tài khoản nội bộ.
 - Đăng nhập bằng Google.
 - Quản lý session và token.
 - Hồ sơ người dùng.
@@ -36,7 +38,7 @@ SplitMate là ứng dụng mobile hỗ trợ chia tiền trong nhóm một cách
 - Dart
 - Backend tích hợp: NestJS, TypeORM, PostgreSQL, Redis, JWT
 
-Lưu ý: ở giai đoạn hiện tại project frontend vẫn đang trong bước xây nền tài liệu và định hướng, chưa triển khai feature UI hoàn chỉnh.
+Lưu ý: project hiện đã qua giai đoạn foundation ban đầu và đã hoàn thành auth flow cơ bản, nhưng UI nghiệp vụ chính vẫn đang ở mức khung và placeholder.
 
 ## Tài liệu trong repo
 
@@ -49,9 +51,19 @@ Lưu ý: ở giai đoạn hiện tại project frontend vẫn đang trong bướ
 ## Trạng thái hiện tại
 
 - Backend đã có Auth và Group Management.
-- Frontend Flutter mới ở giai đoạn khởi tạo project.
-- Phase hiện tại: `Phase 0 - Documentation & Direction`.
+- Frontend Flutter đã xong:
+  - `Phase 0 - Documentation & Direction`
+  - `Phase 1 - Flutter Foundation Setup`
+  - `Phase 2 - Dependencies Setup`
+  - `Phase 3 - Auth UI & Session Flow`
+- Auth hiện hỗ trợ:
+  - local register bằng `email + password`
+  - local login bằng `email + password`
+  - Google sign-in
+  - secure storage cho token
+  - bootstrap session khi mở lại app
+- Phase hiện tại: chuẩn bị sang `Phase 4 - Main Layout & Navigation`.
 
 ## Hướng phát triển tiếp theo
 
-Sau khi hoàn tất bộ tài liệu nền tảng, bước tiếp theo là chuẩn hóa foundation cho app Flutter: cấu trúc `lib/`, router, theme, config môi trường và màn hình khởi đầu.
+Sau khi chốt auth flow ở Phase 3, bước tiếp theo là làm `Phase 4 - Main Layout & Navigation`: tạo shell sau login, bảo vệ route, và chuẩn hóa điều hướng giữa khu vực public và authenticated.

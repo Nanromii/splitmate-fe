@@ -18,7 +18,7 @@ SplitMate là ứng dụng hỗ trợ chia tiền trong nhóm. App mobile sẽ l
 
 ## Các module dự kiến của app
 
-- Auth bằng Google
+- Auth bằng local account và Google
 - Session/token
 - User profile
 - Group list
