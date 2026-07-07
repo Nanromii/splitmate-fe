@@ -182,7 +182,7 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Đọc API contract Auth từ Swagger/BE docs
+- [X] Đọc API contract Auth từ Swagger/BE docs
 - [ ] Tạo auth models
 - [ ] Tạo auth API client/repository
 - [ ] Tạo auth provider/state
