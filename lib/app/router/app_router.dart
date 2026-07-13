@@ -1,9 +1,13 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/providers/auth_state.dart';
-import '../../features/auth/screens/home_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/splash_screen.dart';
+import '../../features/groups/screens/groups_screen.dart';
+import '../../features/main/screens/activity_screen.dart';
+import '../../features/main/screens/dashboard_screen.dart';
+import '../../features/main/screens/main_shell_screen.dart';
+import '../../features/settings/screens/settings_screen.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -23,10 +27,48 @@ class AppRouter {
           name: 'login',
           builder: (context, state) => const LoginScreen(),
         ),
-        GoRoute(
-          path: AppRoutes.home,
-          name: 'home',
-          builder: (context, state) => const HomeScreen(),
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return MainShellScreen(navigationShell: navigationShell);
+          },
+          branches: [
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: AppRoutes.home,
+                  name: 'home',
+                  builder: (context, state) => const DashboardScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: AppRoutes.groups,
+                  name: 'groups',
+                  builder: (context, state) => const GroupsScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: AppRoutes.activity,
+                  name: 'activity',
+                  builder: (context, state) => const ActivityScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: AppRoutes.settings,
+                  name: 'settings',
+                  builder: (context, state) => const SettingsScreen(),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
       redirect: (context, state) {
@@ -35,8 +77,7 @@ class AppRouter {
         final isLogin = location == AppRoutes.login;
 
         if (authState.status == AuthStatus.initial ||
-            authState.status == AuthStatus.loading ||
-            authState.status == AuthStatus.failure) {
+            authState.status == AuthStatus.loading) {
           return isSplash ? null : AppRoutes.splash;
         }
 
