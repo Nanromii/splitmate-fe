@@ -222,6 +222,13 @@ Lý do:
 
 Theo định hướng hiện tại, package phù hợp là `go_router`.
 
+Quy ước hiện tại:
+
+- Public routes gồm splash và login.
+- Authenticated area dùng `StatefulShellRoute` trong `app/router/`.
+- Các branch chính hiện có: Home, Groups, Activity và Settings.
+- Screen nghiệp vụ đặt trong feature tương ứng, không để main app placeholder trong `features/auth`.
+
 ## Theme nên tập trung ở đâu
 
 Theme nên tập trung trong `app/theme/`.

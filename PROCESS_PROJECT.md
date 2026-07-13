@@ -8,9 +8,10 @@
   - `Phase 1 - Flutter Foundation Setup`
   - `Phase 2 - Dependencies Setup`
   - `Phase 3 - Auth UI & Session Flow`
-- Trạng thái hiện tại của Flutter: cuối `Phase 3`, chuẩn bị sang `Phase 4 - Main Layout & Navigation`.
-- Bước đang làm: đồng bộ lại tài liệu theo trạng thái source hiện tại.
-- Bước tiếp theo: làm main shell/navigation sau khi đăng nhập.
+  - `Phase 4 - Main Layout & Navigation`
+- Trạng thái hiện tại của Flutter: đã có authenticated main shell/navigation, chuẩn bị sang `Phase 5 - Groups`.
+- Bước đang làm: hoàn tất khung điều hướng chính sau đăng nhập.
+- Bước tiếp theo: tích hợp Group Management từ backend.
 
 ## B. Nguyên tắc làm dự án
 
@@ -242,11 +243,11 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Tạo main shell/navigation
-- [ ] Tạo tabs hoặc bottom navigation nếu phù hợp
-- [ ] Tạo placeholder các màn chính
-- [ ] Bảo vệ route cần login
-- [ ] Điều hướng logout/login hợp lý
+- [X] Tạo main shell/navigation
+- [X] Tạo tabs hoặc bottom navigation nếu phù hợp
+- [X] Tạo placeholder các màn chính
+- [X] Bảo vệ route cần login
+- [X] Điều hướng logout/login hợp lý
 
 Done khi:
 
@@ -543,9 +544,9 @@ Commit gợi ý:
 ## D. Bước hiện tại và bước tiếp theo
 
 ```txt
-Current phase: Phase 3 - Auth UI & Session Flow
-Current task: Finalize docs after auth implementation
-Next task: Phase 4 - Main Layout & Navigation
+Current phase: Phase 4 - Main Layout & Navigation
+Current task: Add authenticated main shell and placeholder sections
+Next task: Phase 5 - Groups
 ```
 
 ## E. Template cập nhật tiến độ
@@ -561,6 +562,26 @@ Next task: Phase 4 - Main Layout & Navigation
 ```
 
 ## F. Progress Log
+
+### 2026-07-13
+- Done:
+  - Tạo authenticated main shell bằng `StatefulShellRoute`
+  - Thêm bottom navigation cho Home, Groups, Activity và Settings
+  - Tách home/dashboard khỏi `features/auth`
+  - Giữ guard route theo auth state hiện có
+  - Thêm logout trong Settings để xóa session và quay về login
+- Changed files:
+  - `lib/app/router/`
+  - `lib/features/main/`
+  - `lib/features/groups/`
+  - `lib/features/settings/`
+  - `test/widget_test.dart`
+- Notes:
+  - Chưa tích hợp Group API trong phase này
+  - Đã chạy `flutter analyze --no-pub`
+  - Chưa xác minh thủ công trên device/emulator
+- Next:
+  - Làm `Phase 5 - Groups`
 
 ### 2026-07-07
 - Done:
