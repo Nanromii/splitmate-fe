@@ -65,7 +65,7 @@ Lưu ý: project hiện đã qua giai đoạn foundation ban đầu, đã hoàn 
   - secure storage cho token
   - bootstrap session khi mở lại app
 - App chính hiện có authenticated shell với Home, Groups, Activity và Settings.
-- Groups hiện hỗ trợ danh sách nhóm, tạo nhóm, xem chi tiết nhóm, sửa/xóa nhóm với owner, xem/thêm thành viên, rời nhóm và chuyển owner theo contract backend.
+- Groups hiện hỗ trợ danh sách nhóm, tạo nhóm, xem chi tiết nhóm, sửa/xóa nhóm với owner, xem/thêm thành viên bằng email, rời nhóm và chuyển owner theo contract backend.
 - Phase hiện tại: chuẩn bị sang `Phase 6 - Expenses`.
 
 ## Hướng phát triển tiếp theo

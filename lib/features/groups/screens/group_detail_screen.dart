@@ -113,12 +113,12 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
                 _ActionPanel(
                   isOwner: state.isOwner,
                   isSaving: state.isSaving,
-                  onAddMember: () => _showUserIdDialog(
+                  onAddMember: () => _showEmailDialog(
                     title: 'Thêm thành viên',
-                    label: 'User ID',
+                    label: 'Email thành viên',
                     submitLabel: 'Thêm',
-                    onSubmit: (userId) {
-                      return ref.read(provider.notifier).addMember(userId);
+                    onSubmit: (email) {
+                      return ref.read(provider.notifier).addMember(email);
                     },
                   ),
                   onDelete: () => _confirmAndRun(
@@ -174,7 +174,7 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
     );
   }
 
-  Future<void> _showUserIdDialog({
+  Future<void> _showEmailDialog({
     required String title,
     required String label,
     required String submitLabel,
@@ -189,7 +189,11 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
           title: Text(title),
           content: TextField(
             controller: controller,
-            decoration: InputDecoration(labelText: label),
+            decoration: InputDecoration(
+              labelText: label,
+              hintText: 'member@example.com',
+            ),
+            keyboardType: TextInputType.emailAddress,
             autofocus: true,
           ),
           actions: [
@@ -211,6 +215,15 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
     controller.dispose();
 
     if (value == null || value.isEmpty) {
+      return;
+    }
+
+    if (!value.contains('@')) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Email thành viên chưa hợp lệ.')),
+        );
+      }
       return;
     }
 
@@ -341,7 +354,7 @@ class _ActionPanel extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.person_add_alt_outlined),
                 title: const Text('Thêm thành viên'),
-                subtitle: const Text('Nhập userId theo contract backend.'),
+                subtitle: const Text('Nhập email tài khoản SplitMate.'),
                 enabled: !isSaving,
                 onTap: onAddMember,
               ),

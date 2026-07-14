@@ -40,14 +40,14 @@ class UpdateGroupRequest {
 
 class AddGroupMemberRequest {
   const AddGroupMemberRequest({
-    required this.userId,
+    required this.email,
   });
 
-  final String userId;
+  final String email;
 
   Map<String, dynamic> toJson() {
     return {
-      'userId': userId,
+      'email': email,
     };
   }
 }

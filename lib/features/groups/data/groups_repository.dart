@@ -112,12 +112,12 @@ class GroupsRepository {
   Future<GroupMember> addMember({
     required String accessToken,
     required String groupId,
-    required String userId,
+    required String email,
   }) async {
     final data = await _api.addMember(
       accessToken: accessToken,
       groupId: groupId,
-      request: AddGroupMemberRequest(userId: userId),
+      request: AddGroupMemberRequest(email: email),
     );
 
     return GroupMember.fromJson(data);

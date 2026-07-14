@@ -579,7 +579,7 @@ Next task: Phase 6 - Expenses
 - Notes:
   - Đã chạy `flutter analyze --no-pub`
   - Chưa xác minh thủ công trên device/emulator
-  - Add member và transfer owner hiện nhập trực tiếp `userId` vì backend chưa có API search user trong scope Phase 5
+  - Add member hiện nhập email thành viên theo contract backend mới; transfer owner vẫn dùng member list hiện có
 - Next:
   - Làm `Phase 6 - Expenses`
 

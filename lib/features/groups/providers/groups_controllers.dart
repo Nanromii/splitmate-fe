@@ -253,7 +253,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
     }
   }
 
-  Future<bool> addMember(String userId) async {
+  Future<bool> addMember(String email) async {
     final token = _requireAccessToken();
 
     if (token == null) {
@@ -266,7 +266,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
       await _repository.addMember(
         accessToken: token,
         groupId: _groupId,
-        userId: userId,
+        email: email.trim().toLowerCase(),
       );
 
       final members = await _repository.listMembers(
