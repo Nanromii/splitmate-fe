@@ -9,9 +9,10 @@
   - `Phase 2 - Dependencies Setup`
   - `Phase 3 - Auth UI & Session Flow`
   - `Phase 4 - Main Layout & Navigation`
-- Trạng thái hiện tại của Flutter: đã có authenticated main shell/navigation, chuẩn bị sang `Phase 5 - Groups`.
-- Bước đang làm: hoàn tất khung điều hướng chính sau đăng nhập.
-- Bước tiếp theo: tích hợp Group Management từ backend.
+  - `Phase 5 - Groups`
+- Trạng thái hiện tại của Flutter: đã tích hợp Group Management từ backend, chuẩn bị sang `Phase 6 - Expenses`.
+- Bước đang làm: hoàn tất kiểm tra và handoff Phase 5.
+- Bước tiếp theo: tích hợp Expenses trong group detail.
 
 ## B. Nguyên tắc làm dự án
 
@@ -287,16 +288,16 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Đọc API group từ Swagger/BE docs
-- [ ] Tạo group models
-- [ ] Tạo group API/repository
-- [ ] Tạo group list screen
-- [ ] Tạo group detail screen
-- [ ] Tạo create group flow
-- [ ] Tạo update group flow nếu backend có
-- [ ] Tạo member list
-- [ ] Xử lý loading/error/empty state
-- [ ] Pull to refresh nếu phù hợp
+- [X] Đọc API group từ Swagger/BE docs
+- [X] Tạo group models
+- [X] Tạo group API/repository
+- [X] Tạo group list screen
+- [X] Tạo group detail screen
+- [X] Tạo create group flow
+- [X] Tạo update group flow nếu backend có
+- [X] Tạo member list
+- [X] Xử lý loading/error/empty state
+- [X] Pull to refresh nếu phù hợp
 
 Done khi:
 
@@ -544,9 +545,9 @@ Commit gợi ý:
 ## D. Bước hiện tại và bước tiếp theo
 
 ```txt
-Current phase: Phase 4 - Main Layout & Navigation
-Current task: Add authenticated main shell and placeholder sections
-Next task: Phase 5 - Groups
+Current phase: Phase 5 - Groups
+Current task: Finalize Group Management integration
+Next task: Phase 6 - Expenses
 ```
 
 ## E. Template cập nhật tiến độ
@@ -562,6 +563,25 @@ Next task: Phase 5 - Groups
 ```
 
 ## F. Progress Log
+
+### 2026-07-14
+- Done:
+  - Đọc backend group contract trong `API_LIST.md`, `API_CONVENTION.md`, `ERROR_HANDLING.md` và DTO/mapper groups để lấy đúng field response
+  - Tạo feature `groups` theo hướng feature-first với data layer, models, providers/state, screens và widgets
+  - Tích hợp các API groups đã có: list, create, detail, update, delete, members, add member, leave và transfer owner
+  - Thay placeholder Groups bằng list/detail/create/edit flow có loading/error/empty state và pull-to-refresh
+  - Nối route authenticated cho `/groups`, `/groups/create`, `/groups/:groupId`, `/groups/:groupId/edit`
+- Changed files:
+  - `lib/app/router/`
+  - `lib/features/groups/`
+  - `PROCESS_PROJECT.md`
+  - `README.md`
+- Notes:
+  - Đã chạy `flutter analyze --no-pub`
+  - Chưa xác minh thủ công trên device/emulator
+  - Add member và transfer owner hiện nhập trực tiếp `userId` vì backend chưa có API search user trong scope Phase 5
+- Next:
+  - Làm `Phase 6 - Expenses`
 
 ### 2026-07-13
 - Done:
