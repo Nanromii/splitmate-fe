@@ -160,7 +160,11 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
       return false;
     }
 
-    state = state.copyWith(isSaving: true, clearError: true);
+    state = state.copyWith(
+      isSaving: true,
+      clearError: true,
+      clearAction: true,
+    );
 
     try {
       final group = await _repository.updateGroup(
@@ -184,6 +188,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
           error,
           fallback: 'Không thể cập nhật nhóm.',
         ),
+        clearAction: true,
       );
       return false;
     }
@@ -196,7 +201,11 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
       return false;
     }
 
-    state = state.copyWith(isSaving: true, clearError: true);
+    state = state.copyWith(
+      isSaving: true,
+      clearError: true,
+      clearAction: true,
+    );
 
     try {
       final message = await _repository.deleteGroup(
@@ -216,6 +225,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
           error,
           fallback: 'Không thể xóa nhóm.',
         ),
+        clearAction: true,
       );
       return false;
     }
@@ -228,7 +238,11 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
       return false;
     }
 
-    state = state.copyWith(isSaving: true, clearError: true);
+    state = state.copyWith(
+      isSaving: true,
+      clearError: true,
+      clearAction: true,
+    );
 
     try {
       final message = await _repository.leaveGroup(
@@ -248,6 +262,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
           error,
           fallback: 'Không thể rời nhóm.',
         ),
+        clearAction: true,
       );
       return false;
     }
@@ -260,7 +275,11 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
       return false;
     }
 
-    state = state.copyWith(isSaving: true, clearError: true);
+    state = state.copyWith(
+      isSaving: true,
+      clearError: true,
+      clearAction: true,
+    );
 
     try {
       await _repository.addMember(
@@ -278,6 +297,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
         members: members,
         isSaving: false,
         actionMessage: 'Đã thêm thành viên.',
+        clearError: true,
       );
       return true;
     } catch (error) {
@@ -287,6 +307,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
           error,
           fallback: 'Người dùng không tồn tại.',
         ),
+        clearAction: true,
       );
       return false;
     }
@@ -299,7 +320,11 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
       return false;
     }
 
-    state = state.copyWith(isSaving: true, clearError: true);
+    state = state.copyWith(
+      isSaving: true,
+      clearError: true,
+      clearAction: true,
+    );
 
     try {
       final message = await _repository.transferOwner(
@@ -321,6 +346,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
           error,
           fallback: 'Không thể chuyển quyền chủ nhóm.',
         ),
+        clearAction: true,
       );
       return false;
     }

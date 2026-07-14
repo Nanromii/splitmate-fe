@@ -106,28 +106,7 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
                 _ActionPanel(
                   isOwner: state.isOwner,
                   isSaving: state.isSaving,
-                  onAddMember: () => _showEmailDialog(
-                    title: 'Thêm thành viên',
-                    label: 'Email thành viên',
-                    submitLabel: 'Thêm',
-                    onSubmit: (email) async {
-                      final success =
-                          await ref.read(provider.notifier).addMember(email);
-
-                      if (!success && mounted) {
-                        final message =
-                            ref.read(provider).errorMessage ??
-                                'Người dùng không tồn tại.';
-
-                        await _showMessageDialog(
-                          title: 'Không thể thêm thành viên',
-                          message: message,
-                        );
-                      }
-
-                      return success;
-                    },
-                  ),
+                  onAddMember: _showAddMemberDialog,
                   onDelete: () => _confirmAndRun(
                     title: 'Xóa nhóm?',
                     message:
@@ -181,79 +160,22 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
     );
   }
 
-  Future<void> _showEmailDialog({
-    required String title,
-    required String label,
-    required String submitLabel,
-    required Future<bool> Function(String value) onSubmit,
-  }) async {
-    final controller = TextEditingController();
+  Future<void> _showAddMemberDialog() async {
+    final provider = groupDetailControllerProvider(widget.groupId);
 
-    final value = await showDialog<String>(
+    await showDialog<void>(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: label,
-              hintText: 'member@example.com',
-            ),
-            keyboardType: TextInputType.emailAddress,
-            autofocus: true,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Hủy'),
-            ),
-            FilledButton(
-              onPressed: () {
-                Navigator.of(context).pop(controller.text.trim());
-              },
-              child: Text(submitLabel),
-            ),
-          ],
-        );
-      },
-    );
+        return _AddMemberDialog(
+          onSubmit: (email) async {
+            final success = await ref.read(provider.notifier).addMember(email);
 
-    controller.dispose();
+            if (success) {
+              return null;
+            }
 
-    if (value == null || value.isEmpty) {
-      return;
-    }
-
-    if (!value.contains('@')) {
-      if (mounted) {
-        await _showMessageDialog(
-          title: 'Email chưa hợp lệ',
-          message: 'Email thành viên chưa hợp lệ.',
-        );
-      }
-      return;
-    }
-
-    await onSubmit(value);
-  }
-
-  Future<void> _showMessageDialog({
-    required String title,
-    required String message,
-  }) {
-    return showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: [
-            FilledButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Đóng'),
-            ),
-          ],
+            return _friendlyAddMemberError(ref.read(provider).errorMessage);
+          },
         );
       },
     );
@@ -296,6 +218,180 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
       onSuccess?.call();
     }
   }
+}
+
+class _AddMemberDialog extends StatefulWidget {
+  const _AddMemberDialog({
+    required this.onSubmit,
+  });
+
+  final Future<String?> Function(String email) onSubmit;
+
+  @override
+  State<_AddMemberDialog> createState() => _AddMemberDialogState();
+}
+
+class _AddMemberDialogState extends State<_AddMemberDialog> {
+  final _controller = TextEditingController();
+
+  bool _isSubmitting = false;
+  String? _errorMessage;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Thêm thành viên'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
+              labelText: 'Email thành viên',
+              hintText: 'member@example.com',
+            ),
+            keyboardType: TextInputType.emailAddress,
+            autofocus: true,
+            enabled: !_isSubmitting,
+            onChanged: (_) {
+              if (_errorMessage != null) {
+                setState(() => _errorMessage = null);
+              }
+            },
+          ),
+          if (_errorMessage != null) ...[
+            const SizedBox(height: 12),
+            _DialogErrorMessage(
+              message: _errorMessage!,
+              onClose: () => setState(() => _errorMessage = null),
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: _isSubmitting ? null : () => Navigator.of(context).pop(),
+          child: const Text('Hủy'),
+        ),
+        FilledButton(
+          onPressed: _isSubmitting ? null : _submit,
+          child: _isSubmitting
+              ? const SizedBox.square(
+                  dimension: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : const Text('Thêm'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _submit() async {
+    final email = _controller.text.trim();
+
+    if (!_isValidEmail(email)) {
+      setState(() => _errorMessage = 'Email thành viên chưa hợp lệ.');
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+      _errorMessage = null;
+    });
+
+    final errorMessage = await widget.onSubmit(email);
+
+    if (!mounted) {
+      return;
+    }
+
+    if (errorMessage == null) {
+      Navigator.of(context).pop();
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = false;
+      _errorMessage = errorMessage;
+    });
+  }
+
+  bool _isValidEmail(String value) {
+    return RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value);
+  }
+}
+
+class _DialogErrorMessage extends StatelessWidget {
+  const _DialogErrorMessage({
+    required this.message,
+    required this.onClose,
+  });
+
+  final String message;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: colorScheme.onErrorContainer,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  message,
+                  style: TextStyle(color: colorScheme.onErrorContainer),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: onClose,
+              child: const Text('Đóng'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+String _friendlyAddMemberError(String? message) {
+  if (message == null || message.trim().isEmpty) {
+    return 'Người dùng không tồn tại.';
+  }
+
+  final normalized = message.toLowerCase();
+
+  if (normalized.contains('không tìm thấy người dùng')) {
+    return 'Người dùng không tồn tại.';
+  }
+
+  return message;
 }
 
 class _GroupHeader extends StatelessWidget {
