@@ -285,7 +285,7 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
         isSaving: false,
         errorMessage: _readableMessage(
           error,
-          fallback: 'Không thể thêm thành viên.',
+          fallback: 'Người dùng không tồn tại.',
         ),
       );
       return false;

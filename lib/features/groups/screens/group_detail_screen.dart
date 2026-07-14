@@ -37,14 +37,7 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
     final group = state.group;
 
     ref.listen(provider, (previous, next) {
-      final error = next.errorMessage;
       final action = next.actionMessage;
-
-      if (error != null && error != previous?.errorMessage) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error)),
-        );
-      }
 
       if (action != null && action != previous?.actionMessage) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -117,8 +110,22 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
                     title: 'Thêm thành viên',
                     label: 'Email thành viên',
                     submitLabel: 'Thêm',
-                    onSubmit: (email) {
-                      return ref.read(provider.notifier).addMember(email);
+                    onSubmit: (email) async {
+                      final success =
+                          await ref.read(provider.notifier).addMember(email);
+
+                      if (!success && mounted) {
+                        final message =
+                            ref.read(provider).errorMessage ??
+                                'Người dùng không tồn tại.';
+
+                        await _showMessageDialog(
+                          title: 'Không thể thêm thành viên',
+                          message: message,
+                        );
+                      }
+
+                      return success;
                     },
                   ),
                   onDelete: () => _confirmAndRun(
@@ -220,14 +227,36 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
 
     if (!value.contains('@')) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Email thành viên chưa hợp lệ.')),
+        await _showMessageDialog(
+          title: 'Email chưa hợp lệ',
+          message: 'Email thành viên chưa hợp lệ.',
         );
       }
       return;
     }
 
     await onSubmit(value);
+  }
+
+  Future<void> _showMessageDialog({
+    required String title,
+    required String message,
+  }) {
+    return showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Đóng'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _confirmAndRun({
