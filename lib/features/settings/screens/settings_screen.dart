@@ -34,7 +34,7 @@ class SettingsScreen extends ConsumerWidget {
                 ListTile(
                   leading: const Icon(Icons.account_circle_outlined),
                   title: const Text('Profile'),
-                  subtitle: const Text('Profile editing sẽ được thêm sau.'),
+                  subtitle: const Text('Hiển thị thông tin tài khoản hiện tại.'),
                   onTap: () {},
                 ),
                 const Divider(height: 1),

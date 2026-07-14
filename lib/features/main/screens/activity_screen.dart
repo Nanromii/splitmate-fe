@@ -24,7 +24,7 @@ class ActivityScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Expense và activity sẽ được thêm sau khi có group detail và expense APIs.',
+                'Các khoản chi hiện nằm trong từng group detail. Activity timeline toàn app chưa có API contract riêng.',
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

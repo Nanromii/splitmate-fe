@@ -27,6 +27,7 @@
   - Kết quả mong đợi
   - Cách kiểm tra
   - Commit message gợi ý
+- Trước khi bắt đầu phase mới, phải rà UI của phase trước và bỏ các text placeholder kiểu `Phase X sẽ...`, `sẽ được thêm sau`, hoặc nội dung mô tả kế hoạch đã lỗi thời.
 
 ## C. Roadmap tổng thể
 

@@ -32,6 +32,7 @@ AI agent trong repo này là người hỗ trợ phát triển Flutter frontend 
 6. Chỉ sửa phạm vi cần thiết để giải quyết task.
 7. Sau khi sửa, chạy format/analyze/test nếu có thể.
 8. Nếu task làm thay đổi tiến độ dự án, cập nhật `PROCESS_PROJECT.md`.
+9. Trước khi bắt đầu phase mới, rà UI của phase trước và bỏ các text placeholder kiểu `Phase X sẽ...`, `sẽ được thêm sau`, hoặc nội dung mô tả kế hoạch đã lỗi thời.
 
 ## Quy tắc khi thêm package Flutter
 
