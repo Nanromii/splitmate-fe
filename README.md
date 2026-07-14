@@ -38,7 +38,7 @@ SplitMate là ứng dụng mobile hỗ trợ chia tiền trong nhóm một cách
 - Dart
 - Backend tích hợp: NestJS, TypeORM, PostgreSQL, Redis, JWT
 
-Lưu ý: project hiện đã qua giai đoạn foundation ban đầu, đã hoàn thành auth flow cơ bản, authenticated shell và Group Management. Expenses vẫn là phase kế tiếp.
+Lưu ý: project hiện đã qua giai đoạn foundation ban đầu, đã hoàn thành auth flow cơ bản, authenticated shell, Group Management và Expenses equal split trong group.
 
 ## Tài liệu trong repo
 
@@ -58,6 +58,7 @@ Lưu ý: project hiện đã qua giai đoạn foundation ban đầu, đã hoàn 
   - `Phase 3 - Auth UI & Session Flow`
   - `Phase 4 - Main Layout & Navigation`
   - `Phase 5 - Groups`
+  - `Phase 6 - Expenses`
 - Auth hiện hỗ trợ:
   - local register bằng `email + password`
   - local login bằng `email + password`
@@ -66,8 +67,9 @@ Lưu ý: project hiện đã qua giai đoạn foundation ban đầu, đã hoàn 
   - bootstrap session khi mở lại app
 - App chính hiện có authenticated shell với Home, Groups, Activity và Settings.
 - Groups hiện hỗ trợ danh sách nhóm, tạo nhóm, xem chi tiết nhóm, sửa/xóa nhóm với owner, xem/thêm thành viên bằng email, rời nhóm và chuyển owner theo contract backend.
-- Phase hiện tại: chuẩn bị sang `Phase 6 - Expenses`.
+- Expenses hiện hỗ trợ danh sách khoản chi trong group detail, tạo/xem/sửa/xóa khoản chi equal split, chọn payer/participants từ active members và hiển thị splits backend trả về.
+- Phase hiện tại: chuẩn bị sang `Phase 7 - Settlements`.
 
 ## Hướng phát triển tiếp theo
 
-Sau khi hoàn tất Group Management ở Phase 5, bước tiếp theo là làm `Phase 6 - Expenses`: đọc contract Expense, tạo models/API/state và hiển thị expense trong ngữ cảnh group detail.
+Sau khi hoàn tất Expenses ở Phase 6, bước tiếp theo là làm `Phase 7 - Settlements` khi backend có API contract: đọc contract Settlement, tạo models/API/state và hiển thị nghĩa vụ thanh toán.

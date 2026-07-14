@@ -10,9 +10,10 @@
   - `Phase 3 - Auth UI & Session Flow`
   - `Phase 4 - Main Layout & Navigation`
   - `Phase 5 - Groups`
-- Trạng thái hiện tại của Flutter: đã tích hợp Group Management từ backend, chuẩn bị sang `Phase 6 - Expenses`.
-- Bước đang làm: hoàn tất kiểm tra và handoff Phase 5.
-- Bước tiếp theo: tích hợp Expenses trong group detail.
+  - `Phase 6 - Expenses`
+- Trạng thái hiện tại của Flutter: đã tích hợp Group Management và Expenses equal split từ backend, chuẩn bị sang `Phase 7 - Settlements`.
+- Bước đang làm: hoàn tất kiểm tra và handoff Phase 6.
+- Bước tiếp theo: tích hợp Settlements khi backend có contract.
 
 ## B. Nguyên tắc làm dự án
 
@@ -338,16 +339,16 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Đọc API expense từ Swagger/BE docs
-- [ ] Tạo expense models
-- [ ] Tạo expense API/repository
-- [ ] Tạo expense list trong group detail
-- [ ] Tạo create expense screen
-- [ ] Tạo split input UI
-- [ ] Validate form phía UI
-- [ ] Xử lý payer/member/split amount
-- [ ] Xem chi tiết expense
-- [ ] Update/delete nếu backend hỗ trợ
+- [X] Đọc API expense từ Swagger/BE docs
+- [X] Tạo expense models
+- [X] Tạo expense API/repository
+- [X] Tạo expense list trong group detail
+- [X] Tạo create expense screen
+- [X] Tạo split input UI
+- [X] Validate form phía UI
+- [X] Xử lý payer/member/split amount
+- [X] Xem chi tiết expense
+- [X] Update/delete nếu backend hỗ trợ
 
 Done khi:
 
@@ -545,9 +546,9 @@ Commit gợi ý:
 ## D. Bước hiện tại và bước tiếp theo
 
 ```txt
-Current phase: Phase 5 - Groups
-Current task: Finalize Group Management integration
-Next task: Phase 6 - Expenses
+Current phase: Phase 6 - Expenses
+Current task: Finalize Expenses equal split integration
+Next task: Phase 7 - Settlements
 ```
 
 ## E. Template cập nhật tiến độ
@@ -563,6 +564,28 @@ Next task: Phase 6 - Expenses
 ```
 
 ## F. Progress Log
+
+### 2026-07-14
+- Done:
+  - Đọc backend expense contract trong `API_LIST.md`, `API_CONVENTION.md`, `ERROR_HANDLING.md` và DTO/mapper Expenses để lấy đúng field response detail/splits
+  - Tạo feature `expenses` theo hướng feature-first với models, API/repository, providers/state, screens và widgets
+  - Tích hợp các API expenses đã có: list, create, detail, update và delete trong ngữ cảnh group
+  - Gắn expense list vào `GroupDetailScreen`, thêm route create/detail/edit nested dưới `/groups/:groupId`
+  - Tạo form chọn payer và participants từ active members của group, chỉ gửi `EQUAL` split, không tự gửi `currency`
+  - Hiển thị splits backend trả về trong expense detail
+- Changed files:
+  - `lib/app/router/`
+  - `lib/features/expenses/`
+  - `lib/features/groups/screens/group_detail_screen.dart`
+  - `PROCESS_PROJECT.md`
+  - `README.md`
+- Notes:
+  - Đã chạy `flutter analyze --no-pub`
+  - `dart format` bị kẹt trong wrapper Windows nên đã dừng process formatter và không dùng kết quả formatter làm xác nhận
+  - Chưa xác minh thủ công trên device/emulator
+  - Settlements chưa làm trong phase này vì backend contract ghi Chưa triển khai
+- Next:
+  - Làm `Phase 7 - Settlements` khi backend có API contract
 
 ### 2026-07-14
 - Done:
