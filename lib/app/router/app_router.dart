@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/providers/auth_state.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/splash_screen.dart';
+import '../../features/groups/screens/create_group_screen.dart';
+import '../../features/groups/screens/edit_group_screen.dart';
+import '../../features/groups/screens/group_detail_screen.dart';
 import '../../features/groups/screens/groups_screen.dart';
 import '../../features/main/screens/activity_screen.dart';
 import '../../features/main/screens/dashboard_screen.dart';
@@ -47,6 +50,34 @@ class AppRouter {
                   path: AppRoutes.groups,
                   name: 'groups',
                   builder: (context, state) => const GroupsScreen(),
+                  routes: [
+                    GoRoute(
+                      path: 'create',
+                      name: 'group-create',
+                      builder: (context, state) => const CreateGroupScreen(),
+                    ),
+                    GoRoute(
+                      path: ':groupId',
+                      name: 'group-detail',
+                      builder: (context, state) {
+                        final groupId = state.pathParameters['groupId'] ?? '';
+
+                        return GroupDetailScreen(groupId: groupId);
+                      },
+                      routes: [
+                        GoRoute(
+                          path: 'edit',
+                          name: 'group-edit',
+                          builder: (context, state) {
+                            final groupId =
+                                state.pathParameters['groupId'] ?? '';
+
+                            return EditGroupScreen(groupId: groupId);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
