@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/providers/auth_state.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/splash_screen.dart';
+import '../../features/expenses/screens/create_expense_screen.dart';
+import '../../features/expenses/screens/edit_expense_screen.dart';
+import '../../features/expenses/screens/expense_detail_screen.dart';
 import '../../features/groups/screens/create_group_screen.dart';
 import '../../features/groups/screens/edit_group_screen.dart';
 import '../../features/groups/screens/group_detail_screen.dart';
@@ -74,6 +77,48 @@ class AppRouter {
 
                             return EditGroupScreen(groupId: groupId);
                           },
+                        ),
+                        GoRoute(
+                          path: 'expenses/create',
+                          name: 'expense-create',
+                          builder: (context, state) {
+                            final groupId =
+                                state.pathParameters['groupId'] ?? '';
+
+                            return CreateExpenseScreen(groupId: groupId);
+                          },
+                        ),
+                        GoRoute(
+                          path: 'expenses/:expenseId',
+                          name: 'expense-detail',
+                          builder: (context, state) {
+                            final groupId =
+                                state.pathParameters['groupId'] ?? '';
+                            final expenseId =
+                                state.pathParameters['expenseId'] ?? '';
+
+                            return ExpenseDetailScreen(
+                              groupId: groupId,
+                              expenseId: expenseId,
+                            );
+                          },
+                          routes: [
+                            GoRoute(
+                              path: 'edit',
+                              name: 'expense-edit',
+                              builder: (context, state) {
+                                final groupId =
+                                    state.pathParameters['groupId'] ?? '';
+                                final expenseId =
+                                    state.pathParameters['expenseId'] ?? '';
+
+                                return EditExpenseScreen(
+                                  groupId: groupId,
+                                  expenseId: expenseId,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),

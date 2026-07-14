@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
+import '../../expenses/providers/expenses_providers.dart';
+import '../../expenses/widgets/expense_list_section.dart';
 import '../models/group_member.dart';
 import '../providers/groups_providers.dart';
 import '../widgets/group_member_tile.dart';
@@ -91,7 +93,12 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
           }
 
           return RefreshIndicator(
-            onRefresh: () => ref.read(provider.notifier).load(),
+            onRefresh: () async {
+              await ref.read(provider.notifier).load();
+              await ref
+                  .read(expenseListControllerProvider(widget.groupId).notifier)
+                  .load(refresh: true);
+            },
             child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
               children: [
@@ -151,7 +158,10 @@ class _GroupDetailScreenState extends ConsumerState<GroupDetailScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _PhaseSixHint(currency: group.currency),
+                ExpenseListSection(
+                  groupId: widget.groupId,
+                  currency: group.currency,
+                ),
               ],
             ),
           );
@@ -545,28 +555,6 @@ class _MembersSection extends StatelessWidget {
                 ),
               ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PhaseSixHint extends StatelessWidget {
-  const _PhaseSixHint({
-    required this.currency,
-  });
-
-  final String currency;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      child: ListTile(
-        leading: const Icon(Icons.receipt_long_outlined),
-        title: const Text('Expenses'),
-        subtitle: Text(
-          'Phase 6 sẽ dùng nhóm này làm ngữ cảnh tạo chi tiêu bằng $currency.',
         ),
       ),
     );
