@@ -11,8 +11,8 @@
   - `Phase 4 - Main Layout & Navigation`
   - `Phase 5 - Groups`
   - `Phase 6 - Expenses`
-- Trạng thái hiện tại của Flutter: đã tích hợp Group Management và Expenses equal split từ backend, chuẩn bị sang `Phase 7 - Settlements`.
-- Bước đang làm: hoàn tất kiểm tra và handoff Phase 6.
+- Trạng thái hiện tại của Flutter: đã tích hợp Auth, Group Management, Expenses equal split, token interceptor/refresh retry toàn cục và profile read-only.
+- Bước đang làm: hoàn tất core flows còn thiếu nổi bật sau Phase 6.
 - Bước tiếp theo: tích hợp Settlements khi backend có contract.
 
 ## B. Nguyên tắc làm dự án
@@ -203,6 +203,8 @@ Checklist:
 - [X] Tự điều hướng sau login
 - [X] Xử lý logout
 - [X] Xử lý token expired nếu backend đã có refresh token
+- [X] Tự gắn bearer token cho protected API bằng Dio interceptor
+- [X] Refresh token toàn cục khi protected API trả `401/403`, retry request cũ một lần
 - [X] Chạy `flutter analyze` cho auth slice
 - [ ] Test local register/local login/google login/logout thủ công trên device/emulator
 
@@ -388,7 +390,7 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Đọc API settlement từ Swagger/BE docs
+- [X] Đọc API settlement từ Swagger/BE docs
 - [ ] Tạo settlement models
 - [ ] Tạo settlement API/repository
 - [ ] Tạo settlement summary screen
@@ -403,6 +405,11 @@ Done khi:
 
 Commit gợi ý:
 `feat(settlements): implement settlement summary`
+
+Ghi chú hiện tại:
+
+- Backend docs hiện ghi Settlement APIs, Balance/simplified debt APIs: Chưa triển khai.
+- Frontend chưa tạo feature settlements vì Chưa xác minh backend contract đủ rõ để map request/response.
 
 ### Phase 8 - Notifications
 
@@ -432,7 +439,7 @@ Cách kiểm tra:
 
 Checklist:
 
-- [ ] Đọc API notification/device token từ Swagger/BE docs
+- [X] Đọc API notification/device token từ Swagger/BE docs
 - [ ] Tạo notification models
 - [ ] Tạo notification screen
 - [ ] Tích hợp Firebase Messaging nếu cần
@@ -447,6 +454,11 @@ Done khi:
 
 Commit gợi ý:
 `feat(notifications): add notification flow`
+
+Ghi chú hiện tại:
+
+- Backend docs hiện ghi Notification APIs: Chưa triển khai.
+- Frontend chưa tạo feature notifications vì Chưa thấy implement/backend contract trong source hiện tại.
 
 ### Phase 9 - Polish UX
 
@@ -548,7 +560,7 @@ Commit gợi ý:
 
 ```txt
 Current phase: Phase 6 - Expenses
-Current task: Finalize Expenses equal split integration
+Current task: Complete missing frontend core flows after Expenses
 Next task: Phase 7 - Settlements
 ```
 
@@ -565,6 +577,35 @@ Next task: Phase 7 - Settlements
 ```
 
 ## F. Progress Log
+
+### 2026-07-15
+
+- Done:
+  - Đọc frontend docs/source chính và backend docs `API_LIST.md`, `AUTH.md`, `API_CONVENTION.md`, `ERROR_HANDLING.md`
+  - Thêm Dio interceptor tự gắn bearer token cho protected API, bỏ qua public auth APIs
+  - Thêm refresh retry flow toàn cục cho protected API trả `401/403`, retry request cũ một lần và clear session nếu refresh thất bại
+  - Thêm tín hiệu session invalidation để `AuthController` đưa app về login sau khi refresh thất bại
+  - Bỏ truyền access token thủ công khỏi auth/groups/expenses API methods
+  - Thêm màn Profile read-only từ `AuthUser` và route `/settings/profile`
+  - Kiểm tra backend docs cho Settlements, Notifications và split type khác `EQUAL`
+- Changed files:
+  - `lib/core/network/`
+  - `lib/features/auth/`
+  - `lib/features/groups/`
+  - `lib/features/expenses/`
+  - `lib/features/settings/`
+  - `lib/app/router/`
+  - `PROCESS_PROJECT.md`
+  - `README.md`
+  - `ARCHITECTURE.md`
+- Notes:
+  - Đã chạy `flutter analyze --no-pub`
+  - Profile hiện read-only vì backend contract hiện tại chưa có API update profile
+  - Settlements: Chưa xác minh backend contract; backend docs ghi Settlement APIs và Balance/simplified debt APIs Chưa triển khai
+  - Notifications: Chưa thấy implement/backend contract trong source hiện tại; backend docs ghi Notification APIs Chưa triển khai
+  - Split type khác `EQUAL`: chưa implement vì backend docs ghi Custom split APIs ngoài `EQUAL` Chưa triển khai
+- Next:
+  - Chờ backend bổ sung contract trước khi làm Settlements/Notifications/custom split UI
 
 ### 2026-07-14
 

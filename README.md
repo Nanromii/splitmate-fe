@@ -65,11 +65,15 @@ Lưu ý: project hiện đã qua giai đoạn foundation ban đầu, đã hoàn 
   - Google sign-in
   - secure storage cho token
   - bootstrap session khi mở lại app
+  - tự gắn bearer token cho protected API bằng Dio interceptor
+  - refresh token toàn cục khi protected API trả `401/403`, retry request một lần và quay về login nếu refresh thất bại
 - App chính hiện có authenticated shell với Home, Groups, Activity và Settings.
+- Profile hiện có màn read-only hiển thị thông tin user từ auth state; backend contract hiện tại chưa có API update profile.
 - Groups hiện hỗ trợ danh sách nhóm, tạo nhóm, xem chi tiết nhóm, sửa/xóa nhóm với owner, xem/thêm thành viên bằng email, rời nhóm và chuyển owner theo contract backend.
 - Expenses hiện hỗ trợ danh sách khoản chi trong group detail, tạo/xem/sửa/xóa khoản chi equal split, chọn payer/participants từ active members và hiển thị splits backend trả về.
-- Phase hiện tại: chuẩn bị sang `Phase 7 - Settlements`.
+- Settlements, Notifications và split type khác `EQUAL` chưa được implement ở frontend vì backend docs hiện ghi chưa triển khai contract tương ứng.
+- Phase hiện tại: chờ backend contract cho `Phase 7 - Settlements`.
 
 ## Hướng phát triển tiếp theo
 
-Sau khi hoàn tất Expenses ở Phase 6, bước tiếp theo là làm `Phase 7 - Settlements` khi backend có API contract: đọc contract Settlement, tạo models/API/state và hiển thị nghĩa vụ thanh toán.
+Sau khi hoàn tất core auth refresh/profile read-only, bước tiếp theo là làm `Phase 7 - Settlements` khi backend có API contract: đọc contract Settlement, tạo models/API/state và hiển thị nghĩa vụ thanh toán.

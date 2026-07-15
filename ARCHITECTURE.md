@@ -179,6 +179,15 @@ Ví dụ các phần có thể nằm ở đó:
 
 Feature chỉ nên dùng lại network client này, không tự dựng client mới tùy tiện.
 
+Quy ước hiện tại:
+
+- `dioProvider` tạo một Dio client dùng chung cho public và protected API.
+- Public auth routes gồm register, login, Google login và refresh không bị tự gắn bearer token.
+- Protected API tự đọc access token từ secure storage và gắn `Authorization: Bearer <accessToken>` trong interceptor.
+- Khi protected API trả `401` hoặc `403`, interceptor dùng refresh token trong secure storage để gọi `/auth/refresh`, lưu token pair mới và retry request cũ một lần.
+- Nếu refresh thất bại, interceptor clear session local và phát tín hiệu để `AuthController` chuyển app về trạng thái unauthenticated.
+- Các refresh đồng thời dùng chung một refresh Future để tránh rotate refresh token nhiều lần cùng lúc.
+
 ## Token storage đặt ở đâu
 
 Token storage nên đặt trong `core/storage/`.
@@ -188,6 +197,8 @@ Về sau có thể dùng secure storage để lưu:
 - access token
 - refresh token
 - session metadata nếu cần
+
+Hiện app đã lưu access token và refresh token trong secure storage. Session metadata chi tiết như `sessionId` và `expiresIn` vẫn lấy từ auth response khi login/register/refresh, chưa có persistence riêng.
 
 Không nên lưu token rải rác ở nhiều feature.
 
