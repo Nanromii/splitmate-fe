@@ -567,6 +567,7 @@ Next task: Phase 7 - Settlements
 ## F. Progress Log
 
 ### 2026-07-14
+
 - Done:
   - Đọc backend expense contract trong `API_LIST.md`, `API_CONVENTION.md`, `ERROR_HANDLING.md` và DTO/mapper Expenses để lấy đúng field response detail/splits
   - Tạo feature `expenses` theo hướng feature-first với models, API/repository, providers/state, screens và widgets
@@ -589,6 +590,7 @@ Next task: Phase 7 - Settlements
   - Làm `Phase 7 - Settlements` khi backend có API contract
 
 ### 2026-07-14
+
 - Done:
   - Đọc backend group contract trong `API_LIST.md`, `API_CONVENTION.md`, `ERROR_HANDLING.md` và DTO/mapper groups để lấy đúng field response
   - Tạo feature `groups` theo hướng feature-first với data layer, models, providers/state, screens và widgets
@@ -608,6 +610,7 @@ Next task: Phase 7 - Settlements
   - Làm `Phase 6 - Expenses`
 
 ### 2026-07-13
+
 - Done:
   - Tạo authenticated main shell bằng `StatefulShellRoute`
   - Thêm bottom navigation cho Home, Groups, Activity và Settings
@@ -628,6 +631,7 @@ Next task: Phase 7 - Settlements
   - Làm `Phase 5 - Groups`
 
 ### 2026-07-07
+
 - Done:
   - Hoàn thành auth flow với local register, local login và Google sign-in
   - Thêm secure session bootstrap từ storage và refresh fallback
