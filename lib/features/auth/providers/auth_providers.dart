@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/config/app_confg_provider.dart';
 import '../../../core/network/dio.provider.dart';
+import '../../../core/network/session_invalidation_provider.dart';
 import '../../../core/storage/secure_storage_provider.dart';
 import '../data/auth_api.dart';
 import '../data/auth_repository.dart';
@@ -28,10 +29,18 @@ final authControllerProvider =
     StateNotifierProvider<AuthController, AuthState>((ref) {
   final config = ref.watch(appConfigProvider);
 
-  return AuthController(
+  final controller = AuthController(
     repository: ref.watch(authRepositoryProvider),
     storage: ref.watch(secureStorageProvider),
     googleSignIn: ref.watch(googleSignInProvider),
     googleServerClientId: config.googleServerClientId,
   );
+
+  ref.listen<int>(sessionInvalidationProvider, (previous, next) {
+    if (previous != next) {
+      controller.handleSessionExpired();
+    }
+  });
+
+  return controller;
 });

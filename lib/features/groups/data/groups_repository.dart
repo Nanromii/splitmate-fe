@@ -10,12 +10,10 @@ class GroupsRepository {
   final GroupsApi _api;
 
   Future<GroupListResponse> listGroups({
-    required String accessToken,
     int page = 1,
     int limit = 20,
   }) async {
     final data = await _api.listGroups(
-      accessToken: accessToken,
       page: page,
       limit: limit,
     );
@@ -24,13 +22,11 @@ class GroupsRepository {
   }
 
   Future<Group> createGroup({
-    required String accessToken,
     required String name,
     String? description,
     String? currency,
   }) async {
     final data = await _api.createGroup(
-      accessToken: accessToken,
       request: CreateGroupRequest(
         name: name,
         description: description,
@@ -42,11 +38,9 @@ class GroupsRepository {
   }
 
   Future<Group> getGroup({
-    required String accessToken,
     required String groupId,
   }) async {
     final data = await _api.getGroup(
-      accessToken: accessToken,
       groupId: groupId,
     );
 
@@ -54,14 +48,12 @@ class GroupsRepository {
   }
 
   Future<Group> updateGroup({
-    required String accessToken,
     required String groupId,
     String? name,
     String? description,
     String? currency,
   }) async {
     final data = await _api.updateGroup(
-      accessToken: accessToken,
       groupId: groupId,
       request: UpdateGroupRequest(
         name: name,
@@ -74,11 +66,9 @@ class GroupsRepository {
   }
 
   Future<String> deleteGroup({
-    required String accessToken,
     required String groupId,
   }) async {
     final data = await _api.deleteGroup(
-      accessToken: accessToken,
       groupId: groupId,
     );
 
@@ -86,11 +76,9 @@ class GroupsRepository {
   }
 
   Future<String> leaveGroup({
-    required String accessToken,
     required String groupId,
   }) async {
     final data = await _api.leaveGroup(
-      accessToken: accessToken,
       groupId: groupId,
     );
 
@@ -98,11 +86,9 @@ class GroupsRepository {
   }
 
   Future<List<GroupMember>> listMembers({
-    required String accessToken,
     required String groupId,
   }) async {
     final items = await _api.listMembers(
-      accessToken: accessToken,
       groupId: groupId,
     );
 
@@ -110,12 +96,10 @@ class GroupsRepository {
   }
 
   Future<GroupMember> addMember({
-    required String accessToken,
     required String groupId,
     required String email,
   }) async {
     final data = await _api.addMember(
-      accessToken: accessToken,
       groupId: groupId,
       request: AddGroupMemberRequest(email: email),
     );
@@ -124,12 +108,10 @@ class GroupsRepository {
   }
 
   Future<String> transferOwner({
-    required String accessToken,
     required String groupId,
     required String newOwnerUserId,
   }) async {
     final data = await _api.transferOwner(
-      accessToken: accessToken,
       groupId: groupId,
       request: TransferGroupOwnerRequest(newOwnerUserId: newOwnerUserId),
     );

@@ -75,12 +75,12 @@ class AuthRepository {
     return AuthSession.fromJson(data);
   }
 
-  Future<AuthUser> getMe(String accessToken) async {
-    final data = await _api.me(accessToken);
+  Future<AuthUser> getMe() async {
+    final data = await _api.me();
     return AuthUser.fromJson(data);
   }
 
-  Future<void> logout(String accessToken) {
-    return _api.logout(accessToken);
+  Future<void> logout() {
+    return _api.logout();
   }
 }

@@ -8,46 +8,35 @@ class ExpensesApi {
   final Dio _dio;
 
   Future<List<Map<String, dynamic>>> listExpenses({
-    required String accessToken,
     required String groupId,
   }) async {
-    final response = await _dio.get(
-      '/groups/$groupId/expenses',
-      options: _authOptions(accessToken),
-    );
+    final response = await _dio.get('/groups/$groupId/expenses');
 
     return _asMapList(response.data);
   }
 
   Future<Map<String, dynamic>> createExpense({
-    required String accessToken,
     required String groupId,
     required CreateExpenseRequest request,
   }) async {
     final response = await _dio.post(
       '/groups/$groupId/expenses',
       data: request.toJson(),
-      options: _authOptions(accessToken),
     );
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> getExpense({
-    required String accessToken,
     required String groupId,
     required String expenseId,
   }) async {
-    final response = await _dio.get(
-      '/groups/$groupId/expenses/$expenseId',
-      options: _authOptions(accessToken),
-    );
+    final response = await _dio.get('/groups/$groupId/expenses/$expenseId');
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> updateExpense({
-    required String accessToken,
     required String groupId,
     required String expenseId,
     required UpdateExpenseRequest request,
@@ -55,31 +44,18 @@ class ExpensesApi {
     final response = await _dio.patch(
       '/groups/$groupId/expenses/$expenseId',
       data: request.toJson(),
-      options: _authOptions(accessToken),
     );
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> deleteExpense({
-    required String accessToken,
     required String groupId,
     required String expenseId,
   }) async {
-    final response = await _dio.delete(
-      '/groups/$groupId/expenses/$expenseId',
-      options: _authOptions(accessToken),
-    );
+    final response = await _dio.delete('/groups/$groupId/expenses/$expenseId');
 
     return _asMap(response.data);
-  }
-
-  Options _authOptions(String accessToken) {
-    return Options(
-      headers: {
-        'Authorization': 'Bearer $accessToken',
-      },
-    );
   }
 
   Map<String, dynamic> _asMap(dynamic data) {

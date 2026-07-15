@@ -8,7 +8,6 @@ class GroupsApi {
   final Dio _dio;
 
   Future<Map<String, dynamic>> listGroups({
-    required String accessToken,
     int page = 1,
     int limit = 20,
   }) async {
@@ -18,121 +17,88 @@ class GroupsApi {
         'page': page,
         'limit': limit,
       },
-      options: _authOptions(accessToken),
     );
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> createGroup({
-    required String accessToken,
     required CreateGroupRequest request,
   }) async {
     final response = await _dio.post(
       '/groups',
       data: request.toJson(),
-      options: _authOptions(accessToken),
     );
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> getGroup({
-    required String accessToken,
     required String groupId,
   }) async {
-    final response = await _dio.get(
-      '/groups/$groupId',
-      options: _authOptions(accessToken),
-    );
+    final response = await _dio.get('/groups/$groupId');
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> updateGroup({
-    required String accessToken,
     required String groupId,
     required UpdateGroupRequest request,
   }) async {
     final response = await _dio.patch(
       '/groups/$groupId',
       data: request.toJson(),
-      options: _authOptions(accessToken),
     );
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> deleteGroup({
-    required String accessToken,
     required String groupId,
   }) async {
-    final response = await _dio.delete(
-      '/groups/$groupId',
-      options: _authOptions(accessToken),
-    );
+    final response = await _dio.delete('/groups/$groupId');
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> leaveGroup({
-    required String accessToken,
     required String groupId,
   }) async {
-    final response = await _dio.post(
-      '/groups/$groupId/leave',
-      options: _authOptions(accessToken),
-    );
+    final response = await _dio.post('/groups/$groupId/leave');
 
     return _asMap(response.data);
   }
 
   Future<List<Map<String, dynamic>>> listMembers({
-    required String accessToken,
     required String groupId,
   }) async {
-    final response = await _dio.get(
-      '/groups/$groupId/members',
-      options: _authOptions(accessToken),
-    );
+    final response = await _dio.get('/groups/$groupId/members');
 
     return _asMapList(response.data);
   }
 
   Future<Map<String, dynamic>> addMember({
-    required String accessToken,
     required String groupId,
     required AddGroupMemberRequest request,
   }) async {
     final response = await _dio.post(
       '/groups/$groupId/members',
       data: request.toJson(),
-      options: _authOptions(accessToken),
     );
 
     return _asMap(response.data);
   }
 
   Future<Map<String, dynamic>> transferOwner({
-    required String accessToken,
     required String groupId,
     required TransferGroupOwnerRequest request,
   }) async {
     final response = await _dio.post(
       '/groups/$groupId/transfer-owner',
       data: request.toJson(),
-      options: _authOptions(accessToken),
     );
 
     return _asMap(response.data);
-  }
-
-  Options _authOptions(String accessToken) {
-    return Options(
-      headers: {
-        'Authorization': 'Bearer $accessToken',
-      },
-    );
   }
 
   Map<String, dynamic> _asMap(dynamic data) {

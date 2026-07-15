@@ -8,11 +8,9 @@ class ExpensesRepository {
   final ExpensesApi _api;
 
   Future<List<Expense>> listExpenses({
-    required String accessToken,
     required String groupId,
   }) async {
     final items = await _api.listExpenses(
-      accessToken: accessToken,
       groupId: groupId,
     );
 
@@ -20,7 +18,6 @@ class ExpensesRepository {
   }
 
   Future<Expense> createExpense({
-    required String accessToken,
     required String groupId,
     required String title,
     required int amount,
@@ -30,7 +27,6 @@ class ExpensesRepository {
     DateTime? expenseDate,
   }) async {
     final data = await _api.createExpense(
-      accessToken: accessToken,
       groupId: groupId,
       request: CreateExpenseRequest(
         title: title,
@@ -46,12 +42,10 @@ class ExpensesRepository {
   }
 
   Future<Expense> getExpense({
-    required String accessToken,
     required String groupId,
     required String expenseId,
   }) async {
     final data = await _api.getExpense(
-      accessToken: accessToken,
       groupId: groupId,
       expenseId: expenseId,
     );
@@ -60,7 +54,6 @@ class ExpensesRepository {
   }
 
   Future<Expense> updateExpense({
-    required String accessToken,
     required String groupId,
     required String expenseId,
     required String title,
@@ -71,7 +64,6 @@ class ExpensesRepository {
     DateTime? expenseDate,
   }) async {
     final data = await _api.updateExpense(
-      accessToken: accessToken,
       groupId: groupId,
       expenseId: expenseId,
       request: UpdateExpenseRequest(
@@ -88,12 +80,10 @@ class ExpensesRepository {
   }
 
   Future<String> deleteExpense({
-    required String accessToken,
     required String groupId,
     required String expenseId,
   }) async {
     final data = await _api.deleteExpense(
-      accessToken: accessToken,
       groupId: groupId,
       expenseId: expenseId,
     );

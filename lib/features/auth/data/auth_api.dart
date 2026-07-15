@@ -54,28 +54,14 @@ class AuthApi {
     return _asMap(response.data);
   }
 
-  Future<Map<String, dynamic>> me(String accessToken) async {
-    final response = await _dio.get(
-      '/auth/me',
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $accessToken',
-        },
-      ),
-    );
+  Future<Map<String, dynamic>> me() async {
+    final response = await _dio.get('/auth/me');
 
     return _asMap(response.data);
   }
 
-  Future<void> logout(String accessToken) async {
-    await _dio.post(
-      '/auth/logout',
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $accessToken',
-        },
-      ),
-    );
+  Future<void> logout() async {
+    await _dio.post('/auth/logout');
   }
 
   Map<String, dynamic> _asMap(dynamic data) {

@@ -28,7 +28,7 @@ class GroupListController extends StateNotifier<GroupListState> {
     );
 
     try {
-      final result = await _repository.listGroups(accessToken: token);
+      final result = await _repository.listGroups();
 
       state = state.copyWith(
         groups: result.items,
@@ -64,7 +64,6 @@ class GroupListController extends StateNotifier<GroupListState> {
 
     try {
       final group = await _repository.createGroup(
-        accessToken: token,
         name: name,
         description: description,
         currency: currency,
@@ -124,11 +123,9 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
 
     try {
       final group = await _repository.getGroup(
-        accessToken: token,
         groupId: _groupId,
       );
       final members = await _repository.listMembers(
-        accessToken: token,
         groupId: _groupId,
       );
 
@@ -168,7 +165,6 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
 
     try {
       final group = await _repository.updateGroup(
-        accessToken: token,
         groupId: _groupId,
         name: name,
         description: description,
@@ -209,7 +205,6 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
 
     try {
       final message = await _repository.deleteGroup(
-        accessToken: token,
         groupId: _groupId,
       );
 
@@ -246,7 +241,6 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
 
     try {
       final message = await _repository.leaveGroup(
-        accessToken: token,
         groupId: _groupId,
       );
 
@@ -283,13 +277,11 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
 
     try {
       await _repository.addMember(
-        accessToken: token,
         groupId: _groupId,
         email: email.trim().toLowerCase(),
       );
 
       final members = await _repository.listMembers(
-        accessToken: token,
         groupId: _groupId,
       );
 
@@ -328,7 +320,6 @@ class GroupDetailController extends StateNotifier<GroupDetailState> {
 
     try {
       final message = await _repository.transferOwner(
-        accessToken: token,
         groupId: _groupId,
         newOwnerUserId: newOwnerUserId,
       );

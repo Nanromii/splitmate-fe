@@ -37,13 +37,15 @@ class AuthController extends StateNotifier<AuthState> {
     }
 
     try {
-      final user = await _repository.getMe(accessToken!);
+      final user = await _repository.getMe();
+      final currentAccessToken = await _storage.getAccessToken();
+      final currentRefreshToken = await _storage.getRefreshToken();
 
       state = AuthState.authenticated(
         AuthSession(
           user: user,
-          accessToken: accessToken,
-          refreshToken: refreshToken!,
+          accessToken: currentAccessToken ?? accessToken!,
+          refreshToken: currentRefreshToken ?? refreshToken!,
           sessionId: '',
           expiresIn: 0,
         ),
@@ -161,7 +163,7 @@ class AuthController extends StateNotifier<AuthState> {
       final accessToken = currentSession?.accessToken;
 
       if (!_isBlank(accessToken)) {
-        await _repository.logout(accessToken!);
+        await _repository.logout();
       }
     } catch (_) {
       // Backend logout lỗi thì vẫn phải xóa session local.
@@ -185,7 +187,7 @@ class AuthController extends StateNotifier<AuthState> {
 
       await _persistSession(refreshedSession);
 
-      final user = await _repository.getMe(refreshedSession.accessToken);
+      final user = await _repository.getMe();
 
       state = AuthState.authenticated(
         refreshedSession.copyWith(user: user),
@@ -216,6 +218,17 @@ class AuthController extends StateNotifier<AuthState> {
     );
 
     _googleInitialized = true;
+  }
+
+  Future<void> handleSessionExpired() async {
+    await _clearLocalSession();
+
+    try {
+      await _ensureGoogleInitialized();
+      await _googleSignIn.signOut();
+    } catch (_) {}
+
+    state = AuthState.unauthenticated();
   }
 
   Future<void> _persistSession(AuthSession session) async {

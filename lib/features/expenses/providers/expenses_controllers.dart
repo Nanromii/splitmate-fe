@@ -32,7 +32,6 @@ class ExpenseListController extends StateNotifier<ExpenseListState> {
 
     try {
       final expenses = await _repository.listExpenses(
-        accessToken: token,
         groupId: _groupId,
       );
 
@@ -76,7 +75,6 @@ class ExpenseListController extends StateNotifier<ExpenseListState> {
 
     try {
       final expense = await _repository.createExpense(
-        accessToken: token,
         groupId: _groupId,
         title: title,
         description: description,
@@ -148,7 +146,6 @@ class ExpenseDetailController extends StateNotifier<ExpenseDetailState> {
 
     try {
       final expense = await _repository.getExpense(
-        accessToken: token,
         groupId: _groupId,
         expenseId: _expenseId,
       );
@@ -191,7 +188,6 @@ class ExpenseDetailController extends StateNotifier<ExpenseDetailState> {
 
     try {
       final expense = await _repository.updateExpense(
-        accessToken: token,
         groupId: _groupId,
         expenseId: _expenseId,
         title: title,
@@ -236,7 +232,6 @@ class ExpenseDetailController extends StateNotifier<ExpenseDetailState> {
 
     try {
       final message = await _repository.deleteExpense(
-        accessToken: token,
         groupId: _groupId,
         expenseId: _expenseId,
       );
