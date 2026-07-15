@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/router/app_routes.dart';
 import '../../auth/providers/auth_providers.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -35,7 +37,9 @@ class SettingsScreen extends ConsumerWidget {
                   leading: const Icon(Icons.account_circle_outlined),
                   title: const Text('Profile'),
                   subtitle: const Text('Hiển thị thông tin tài khoản hiện tại.'),
-                  onTap: () {},
+                  onTap: () {
+                    context.push(AppRoutes.settingsProfile);
+                  },
                 ),
                 const Divider(height: 1),
                 ListTile(

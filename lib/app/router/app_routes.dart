@@ -8,6 +8,7 @@ class AppRoutes {
   static const groupCreate = '/groups/create';
   static const activity = '/activity';
   static const settings = '/settings';
+  static const settingsProfile = '/settings/profile';
 
   static String groupDetail(String groupId) {
     return '/groups/$groupId';

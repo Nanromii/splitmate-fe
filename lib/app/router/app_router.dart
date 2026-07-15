@@ -13,6 +13,7 @@ import '../../features/groups/screens/groups_screen.dart';
 import '../../features/main/screens/activity_screen.dart';
 import '../../features/main/screens/dashboard_screen.dart';
 import '../../features/main/screens/main_shell_screen.dart';
+import '../../features/settings/screens/profile_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import 'app_routes.dart';
 
@@ -141,6 +142,13 @@ class AppRouter {
                   path: AppRoutes.settings,
                   name: 'settings',
                   builder: (context, state) => const SettingsScreen(),
+                  routes: [
+                    GoRoute(
+                      path: 'profile',
+                      name: 'settings-profile',
+                      builder: (context, state) => const ProfileScreen(),
+                    ),
+                  ],
                 ),
               ],
             ),
